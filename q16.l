@@ -24,7 +24,7 @@ void display(int flag)
 }
 int main(){
 	printf("\n Enter a word to check whether it is vowel or NOT\n");
-	yylex()
+	yylex();
 	return 0;
 }
 int yywrap()
