@@ -15,3 +15,17 @@ ps = power_set(s)
 print("Power set of", s, "is:")
 for subset in ps:
     print(subset)
+    
+    
+    
+OUTPUT:
+    Enter a set of elements separated by commas: 1,2,3
+Power set of ['1', '2', '3'] is:
+[]
+['3']
+['2']
+['2', '3']
+['1']
+['1', '3']
+['1', '2']
+['1', '2', '3']
