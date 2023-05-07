@@ -1,29 +1,23 @@
+import numpy as np
 import matplotlib.pyplot as plt
-import pandas as pd
-import seaborn as sns
 from sklearn.cluster import KMeans
-
-plt.style.use("seaborn-whitegrid")
-plt.rc("figure", autolayout=True)
-plt.rc(
-    "axes",
-    labelweight="bold",
-    labelsize="large",
-    titleweight="bold",
-    titlesize=14,
-    titlepad=10,
-)
-
-df = pd.read_excel("kmeans.xlsx")
-X = df.loc[:, ["MedInc", "Latitude", "Longitude"]]
-X.head()
-
-# Create cluster feature
-kmeans = KMeans(n_clusters=5)
-X["Cluster"] = kmeans.fit_predict(X)
-X["Cluster"] = X["Cluster"].astype("category")
-X.head()
-
-sns.relplot(
-    x="Longitude", y="Latitude", hue="Cluster", data=X, height=5,
-);
+X = np.random.rand(100, 2)
+wcss = []
+for i in range(1, 11):
+ 
+ kmeans = KMeans(n_clusters=i)
+ 
+ kmeans.fit(X)
+ wcss.append(kmeans.inertia_)
+plt.plot(range(1, 11), wcss)
+plt.xlabel('Number of clusters')
+plt.ylabel('WCSS')
+plt.show()
+k = np.argmin(np.diff(wcss, 2)) + 2
+kmeans = KMeans(n_clusters=k)
+kmeans.fit(X)
+centers = kmeans.cluster_centers_
+labels = kmeans.labels_
+plt.scatter(X[:, 0], X[:, 1], c=labels)
+plt.scatter(centers[:, 0], centers[:, 1], marker='x', s=200, linewidths=3, color='r')
+plt.show()
