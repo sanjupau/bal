@@ -37,3 +37,13 @@ plt.xlabel("Episode")
 plt.ylabel("Reward")
 plt.title("Q-learning Rewards")
 plt.show()
+
+
+
+OUTPUT:
+    Enter the number of states: 3
+Enter the number of actions: 4
+Enter the learning rate (alpha): 0.1
+Enter the discount factor (gamma): 0.2
+Enter the number of episodes: 1000
+Enter the maximum number of steps per episode: 100
