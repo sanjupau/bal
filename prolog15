@@ -1,0 +1,354 @@
+Q1
+move(1,X,Y,_):- write('Move top disk from '), 
+write(X), 
+write(' to '), 
+write(Y),nl. 
+move(N,X,Y,Z):- N>1, 
+M is N-1, 
+move(M,X,Z,Y), 
+move(1,X,Y,_), 
+move(M,Z,Y,X). 
+
+	Output
+move(3,source,target,temporary).
+
+move(2,source,target,temporary).
+
+Q2
+likes(steve,X):- easy(X). 
+hard(X):- science(X). 
+easy(X):- baskweav(X). 
+baskweav(bk301).
+  
+Output
+
+likes(steve,X).
+
+
+Q3
+happy(X):-wealthy(X),smart(X). 
+smart(X):-reads(X). 
+wealthy(john). 
+reads(john). 
+exciting_life(A):-happy(A). 
+
+OUTPUT
+
+exciting_life(john).
+
+Q4
+likes(john,Y):- food(Y). 
+food(apple). 
+food(chicken). 
+food(Y):- eat(X,Y),alive(X,Y). 
+alive(bill,peanut). 
+eat(bill,peanut). 
+eat(sue,Y):- eat(bill,Y). 
+
+OUTPUT
+
+likes(john,peanut)
+
+eat(sue,X)
+Q5
+man(marcus). 
+pompeian(marcus). 
+roman(X):- pompeian(X). 
+ruler(caesar). 
+hate(X,caesar):- roman(X),not(loyalto(X,caesar)). 
+loyalto(X,Y):- man(X),man(Y). 
+loyalto(X,Y):- 
+person(X),ruler(Y),not(tryassasinate(X,Y)). 
+tryassasinate(marcus,caesar). 
+person(X):- man(X). 
+
+Output
+
+loyalto(marcus,caesar)
+
+hate(marcus,caesar)
+
+Q6
+happy(X):-pass(X,history),win(X,lottery). 
+pass(X,_):-study(X);lucky(X). 
+lucky(john). 
+study(not(john)). 
+win(X,lottery):-lucky(X). 
+
+Output
+
+happy(A)
+
+happy(john)
+
+
+Q7
+likes_to_eat(X,Y):-cat(X),fish(Y). 
+cat(X):-calico(X). 
+fish(Y):- tuna(Y). 
+tuna(charlie). 
+tuna(herb). 
+calico(pussy).  
+
+Output
+
+likes_to_eat(pussy, What).
+Q8
+likes(sam,Food):- indian(Food),mild(Food). 
+likes(sam,Food):- chinese(Food). 
+likes(sam,Food):- italian(Food). 
+likes(sam,chips). 
+indian(curry). 
+indian(dahl). 
+indian(tandoori). 
+indian(kurma).  
+
+mild(dahl). 
+mild(tandoori). 
+mild(kurma). 
+chinese(chow_mein). 
+chinese(chop_suey). 
+chinese(sweet_and_sour).  
+
+italian(pizza). 
+italian(spaghetti).
+
+OUTPUT
+
+likes(sam, Food).
+
+likes(sam, curry).
+
+likes(sam, chips).
+
+
+
+Q9
+tree(M):-M=tree(5,tree(4,tree(2,nil,nil),tree(10,nil,nil)),tree(3,nil,nil)). 
+preorder(tree(X,L,R),Xs) :-     
+preorder(L,Ls),     
+preorder(R,Rs),     
+append([X|Ls],Rs,Xs).     
+preorder(_,[]).  
+
+inorder(nil, []). 
+inorder(tree(X, Left, Right), R) :-    
+inorder(Left,R1),    
+inorder(Right,R2),    
+append(R1,[X|R2],R).  
+
+postorder(tree(X, L, R), Xs):-   
+postorder(L, Ls),   
+postorder(R, Rs),   
+append(Ls, Rs, Xs1),   
+append(Xs1, [X], Xs).   
+postorder(_, []).
+
+OUTPUT
+
+tree(T), preorder(T, Xs).
+
+tree(T), inorder(T, Xs).
+
+tree(T), postorder(T, Xs).
+
+Q10
+% Define a binary tree
+b_tree(5, b_tree(3, b_tree(1, nil, nil), b_tree(4, nil, nil)), b_tree(7, b_tree(6, nil, nil), b_tree(8, nil, nil))).
+
+% Check if X belongs to the binary tree
+mem_btree(X, b_tree(X, _, _)) :- !.
+mem_btree(X, b_tree(Y, L, _)) :- X < Y, mem_btree(X, L).
+mem_btree(X, b_tree(Y, _, R)) :- X > Y, mem_btree(X, R).
+
+Output
+
+mem_btree(X, L)
+
+Q11
+perform(grasp,
+state(middle, middle, onbox, hasnot),
+state(middle, middle, onbox, has)). 
+perform(climb, 
+state(MP, BP, onfloor, H), 
+state(MP, BP, onbox, H)). 
+perform(push(P1,P2), 
+state(P1, P1, onfloor, H), 
+state(P2, P2, onfloor, H)). 
+perform(walk(P1,P2), 
+state(P1, BP, onfloor, H), 
+state(P2, BP, onfloor, H)). 
+getfood(state(_,_,_,has)). 
+getfood(S1):- perform(Act, S1, S2), 
+nl, write('In '), write(S1), 
+nl, write(' try '), write(Act), 
+getfood(S2). 
+
+Output
+
+getfood(state(atdoor,nearwindow,onfloor,hasnot)).
+
+Q12
+solution(P) :- 
+path(0, 0, [state(0, 0)], P). 
+path(2, 0, [state(2, 0)|_], []). 
+path(0, 2, C, ['Pour 2 gallons from 3-Gallon jug to 4-
+gallon.'|R] ) :- 
+not(member(state(2, 0), C)), 
+path(2, 0, [state(2, 0)|C], R). 
+path(X, Y, C, ['Fill the 4-Gallon Jug.'|R]) :- 
+X < 4, 
+not(member(state(4, Y), C)), 
+path(4, Y, [state(4, Y)|C], R). 
+path(X, Y, C, ['Fill the 3-Gallon Jug.'|R]) :- 
+Y < 3, 
+not(member(state(X, 3), C)), 
+path(X, 3, [state(X, 3)|C], R). 
+path(X, Y, C, ['Empty the 4-Gallon jug on ground.'|R]) :- 
+X > 0, 
+not(member(state(0, Y), C)), 
+path(0, Y, [state(0, Y)|C], R). 
+path(X, Y, C, ['Empty the 3-Gallon jug on ground.'|R]) :- 
+Y > 0, 
+not(member(state(X, 0), C)), 
+path(X, 0, [state(X, 0)|C], R). 
+path(X, Y, C, ['Pour water from 3-Gallon jug to 4-gallon until 
+it is full.'|R]) :- 
+X + Y >= 4, 
+X < 4, 
+Y > 0, 
+NEW_Y is Y - (4 - X), 
+not(member(state(4, NEW_Y), C)), 
+path(4, NEW_Y, [state(4, NEW_Y)|C], R). 
+path(X, Y, C, ['Pour water from 4-Gallon jug to 3-gallon until 
+it is full.'|R]) :- 
+X + Y >=3, 
+X > 0, 
+Y < 3, 
+NEW_X is X - (3 - Y), 
+not(member(state(NEW_X, 3), C)), 
+path(NEW_X, 3, [state(NEW_X, 3)|C], R). 
+path(X, Y, C, ['Pour all the water from 3-Gallon jug to 4-
+gallon.'|R]) :- 
+X + Y =< 4, 
+Y > 0, 
+NEW_X is X + Y, 
+not(member(state(NEW_X, 0), C)), 
+path(NEW_X, 0, [state(NEW_X, 0)|C], R). 
+path(X, Y, C, ['Pour all the water from 4-Gallon jug to 3-
+gallon.'|R]) :- 
+X + Y =< 3, 
+X > 0, 
+NEW_Y is X + Y, 
+not(member(state(0, NEW_Y), C)), 
+path(0, NEW_Y, [state(0, NEW_Y)|C], R). 
+
+Output
+
+solution(X)
+Q13
+% Main control block and printing 
+find :- 
+path([3,3,left],[0,0,right],[[3,3,left]],_). 
+output([]) :- nl, nl. 
+output([[A,B,String]|T]) :- 
+output(T), 
+write(B), write(' ~~ '), write(A), write(': '), write(String), 
+nl. 
+% Base case 
+path([A,B,C],[A,B,C],_,MoveList):- 
+nl,nl,output(MoveList). 
+% Recursive call to solve the problem 
+path([A,B,C],[D,E,F],Traversed,Moves) :- 
+move([A,B,C],[I,J,K],Out), 
+legal([I,J,K]), % Don't use this move unless it's safe. 
+not(member([I,J,K],Traversed)), 
+path([I,J,K],[D,E,F],[[I,J,K]|Traversed],[ 
+[[I,J,K],[A,B,C],Out] | Moves ]). 
+% Move commands and descriptions of the move 
+move([A,B,left],[C,B,right],'One missionary crosses the river') :- 
+A > 0, C is A - 1. 
+move([A,B,left],[C,B,right],'Two missionaries cross the river') :- 
+A > 1, C is A - 2. 
+move([A,B,left],[C,D,right],'One missionary and One cannibal cross the river') :- 
+A > 0, B > 0, C is A - 1, D is B - 1. 
+move([A,B,left],[A,D,right],'One cannibal crosses the river') 
+:- 
+B > 0, D is B - 1. 
+move([A,B,left],[A,D,right],'Two cannibals cross the river') 
+:- 
+B > 1, D is B - 2. 
+move([A,B,right],[C,B,left],'One missionary returns from the other side') :- 
+A < 3, C is A + 1. 
+move([A,B,right],[C,B,left],'Two missionaries return from the other side') :- 
+A < 2, C is A + 2. 
+move([A,B,right],[C,D,left],'One missionary and One cannibal return from the other 
+side') :- 
+A < 3, B < 3, C is A + 1, D is B + 1. 
+move([A,B,right],[A,D,left],'One cannibal returns from the other side') :- 
+B < 3, D is B + 1. 
+move([A,B,right],[A,D,left],'Two cannibals return from the other side') :- 
+B < 2, D is B + 2. 
+% Legal move definition where B is missionaries and A is cannibals: 
+legal([B,A,_]) :- 
+(A =< B ; B = 0), 
+C is 3-A, D is 3-B, 
+(C =< D; D = 0).
+
+Output
+
+find.
+Q14
+graph = {
+  'A' : ['B','C'],
+  'B' : ['D', 'E'],
+  'C' : ['F'],
+  'D' : [],
+  'E' : ['F'],
+  'F' : []
+}
+
+visited = [] # List to keep track of visited nodes.
+queue = []     #Initialize a queue
+
+def bfs(visited, graph, node):
+  visited.append(node)
+  queue.append(node)
+
+  while queue:
+    s = queue.pop(0) 
+    print (s, end = " ") 
+
+    for neighbour in graph[s]:
+      if neighbour not in visited:
+        visited.append(neighbour)
+        queue.append(neighbour)
+
+# Driver Code
+bfs(visited, graph, 'A')
+Q15
+graph = {
+    'A' : ['B','C'],
+    'B' : ['D', 'E'],
+    'C' : ['F'],
+    'D' : [],
+    'E' : ['F'],
+    'F' : []
+}
+
+visited = set() 
+def dfs(visited, graph, node):
+    if node not in visited:
+        print (node)
+        visited.add(node)
+        for neighbour in graph[node]:
+            dfs(visited, graph, neighbour)
+
+# Driver Code
+dfs(visited, graph, 'A')
+
+
+
+
+
+
